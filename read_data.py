@@ -12,7 +12,8 @@ def tag_pos(a, b, c):
 
 # CSV 檔案路徑
 # csv_file = 'uwb_data.csv'
-csv_file = 'uwb_data_1114.csv'
+csv_file = 'uwb_data_example.csv'
+# csv_file = 'uwb_data_1204.csv'
 # csv_file = 'uwb_data_1607.csv'
 
 # 讀取 CSV 資料
@@ -37,14 +38,27 @@ distance_a1_a2 = 3.6
 
 for i in range(0, len(data), 2):
     if i + 1 < len(data):
-        if data[i]['Anchor'] == '1782' and data[i + 1]['Anchor'] == '1783':
+        if data[i]['Anchor'] == '84' and data[i + 1]['Anchor'] == '85':
             a1_range = data[i]['Range']
             a2_range = data[i + 1]['Range']
-        elif data[i]['Anchor'] == '1783' and data[i + 1]['Anchor'] == '1782':
+        elif data[i]['Anchor'] == '85' and data[i + 1]['Anchor'] == '84':
             a2_range = data[i]['Range']
             a1_range = data[i + 1]['Range']
         else:
             continue
+
+        if(a1_range==0):
+            a1_range=0.01
+        if(a2_range==0):
+            a2_range=0.01
+        # if data[i]['Anchor'] == '1782' and data[i + 1]['Anchor'] == '1783':
+        #     a1_range = data[i]['Range']
+        #     a2_range = data[i + 1]['Range']
+        # elif data[i]['Anchor'] == '1783' and data[i + 1]['Anchor'] == '1782':
+        #     a2_range = data[i]['Range']
+        #     a1_range = data[i + 1]['Range']
+        # else:
+        #     continue
 
         x, y = tag_pos(a2_range, a1_range, distance_a1_a2)
         positions.append((x, y))
@@ -68,7 +82,7 @@ plt.annotate('Start', (x_vals[0], y_vals[0]), textcoords="offset points", xytext
 plt.annotate('End', (x_vals[-1], y_vals[-1]), textcoords="offset points", xytext=(0, 10), ha='center', color='red')
 
 # 標註錨點
-plt.scatter([0, distance_a1_a2], [0, 0], color='orange', s=100, label='Anchors (1782, 1783)')
+plt.scatter([0, distance_a1_a2], [0, 0], color='orange', s=100, label='Anchors (84, 85)')
 
 # 在 A1 和 A2 之間的中點添加停車格，缺口朝上
 
